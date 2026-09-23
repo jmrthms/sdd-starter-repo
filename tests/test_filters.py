@@ -42,3 +42,10 @@ def test_active_is_a_stable_cache_key():
     a = filters.active({"state": "MA", "kind": None, "q": "x"})
     b = filters.active({"q": "x", "state": "MA"})
     assert a == b
+
+
+def test_active_normalises_case_where_sql_does():
+    """city=Boston and city=boston are one selection, so they must be one cache key."""
+    assert filters.active({"city": "Boston"}) == filters.active({"city": "boston"})
+    assert filters.active({"q": "Ash"}) == filters.active({"q": "ash"})
+    assert filters.active({"state": "MA"}) == filters.active({"state": "MA"})

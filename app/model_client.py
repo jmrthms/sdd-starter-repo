@@ -258,7 +258,7 @@ def _describe_record(payload, rng, version, degraded):
 def _summarize_records(payload, rng, version, degraded):
     """The task the live demo builds a feature around.
 
-    Note the length: this returns 70-95 words on purpose. Any word cap in your
+    Note the length: this returns 65-70 words on purpose — over the cap. Any word cap in your
     specification has to be enforced by *your* code, not hoped for from the model.
     """
     count = int(payload.get("count", 0))

@@ -64,6 +64,18 @@ def describe(params: dict[str, Any]) -> str:
     return ", ".join(parts[:-1]) + " and " + parts[-1]
 
 
+_CASE_INSENSITIVE = {"city", "q"}   # compared with LOWER() in SQL, so normalise here too
+
+
 def active(params: dict[str, Any]) -> dict[str, Any]:
-    """Just the filters that are actually set. Useful as a cache key."""
-    return {n: v for n, v in sorted(params.items()) if v is not None and n in _BY_NAME}
+    """Just the filters that are actually set, normalised. Safe to use as a cache key.
+
+    Text filters that SQL matches case-insensitively are lowercased, so ``city=Boston``
+    and ``city=boston`` — the same selection — produce the same key.
+    """
+    out = {}
+    for n, v in sorted(params.items()):
+        if v is None or n not in _BY_NAME:
+            continue
+        out[n] = v.lower() if n in _CASE_INSENSITIVE and isinstance(v, str) else v
+    return out

@@ -24,9 +24,14 @@ working implementation and eight passing tests on disk.
 ## Verified result
 
 ```
-round 1 (from spec-v1)   5 of 8 acceptance criteria FAIL
-round 2 (from spec-v2)   8 of 8 pass
+round 1 (from spec-v1)                      5 of 8 acceptance criteria FAIL
+round 2 (from spec-v2)                      8 of 8 pass
+blind handoff — a fresh agent, spec only    8 of 8 pass, and it found six real spec gaps
 ```
+
+The blind implementer's full report is in `BLIND-HANDOFF-REPORT.md`. It is the best
+example of a gap analysis you have — show it if anyone asks what "specific and evidenced"
+means.
 
 The AC5 failure reads `assert 10 != 10` — the second filter got the first filter's
 cached body, count and all. It is visible and understandable in ten seconds on camera.

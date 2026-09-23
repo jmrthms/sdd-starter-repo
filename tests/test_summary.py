@@ -17,7 +17,7 @@ def test_ac1_filter_with_rows_returns_a_summary(client):
 
 
 def test_ac2_summary_is_capped_at_sixty_words(client):
-    """The stub returns 70-95 words on purpose. The cap is ours to enforce."""
+    """The stub returns 65-70 words on purpose. The cap is ours to enforce."""
     body = client.get("/libraries/summary", params={"kind": "branch"}).json()
     assert body["word_count"] <= 60
     assert len(body["summary"].split()) <= 60
