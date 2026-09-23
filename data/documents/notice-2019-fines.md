@@ -1,6 +1,7 @@
 ---
 id: notice-2019-fines
 title: Notice: fines abolished (March 2019)
+updated: 2019-03-01
 ---
 
 From 1 March 2019 overdue fines are abolished across all facilities. Existing unpaid

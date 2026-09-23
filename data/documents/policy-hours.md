@@ -1,6 +1,7 @@
 ---
 id: policy-hours
 title: Opening hours
+updated: 2024-06-03
 ---
 
 Central libraries open 09:00 to 20:00 Monday to Thursday, 09:00 to 17:00 Friday and

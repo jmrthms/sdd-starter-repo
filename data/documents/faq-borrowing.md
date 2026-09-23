@@ -1,6 +1,7 @@
 ---
 id: faq-borrowing
 title: Borrowing: frequently asked questions
+updated: 2017-05-10
 ---
 
 **How long can I keep an item?**

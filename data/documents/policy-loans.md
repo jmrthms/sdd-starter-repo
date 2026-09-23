@@ -1,6 +1,7 @@
 ---
 id: policy-loans
 title: Lending policy (current)
+updated: 2025-01-15
 ---
 
 Standard loans run for **21 days** for all borrower classes, including student and

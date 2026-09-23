@@ -1,6 +1,7 @@
 ---
 id: guide-donations
 title: Donating materials
+updated: 2023-09-01
 ---
 
 We accept donations of books and media in good condition. We cannot accept encyclopaedias,

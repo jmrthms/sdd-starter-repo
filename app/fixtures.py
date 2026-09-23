@@ -54,6 +54,7 @@ def documents() -> list[dict[str, str]]:
         out.append({
             "id": meta.get("id", path.stem),
             "title": meta.get("title", path.stem),
+            "updated": meta.get("updated", ""),
             "text": text,
             "summary": text.split("\n\n")[0][:200],
             "path": str(path.relative_to(DATA_DIR.parent)),

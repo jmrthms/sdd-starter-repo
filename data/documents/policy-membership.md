@@ -1,6 +1,7 @@
 ---
 id: policy-membership
 title: Membership
+updated: 2024-01-08
 ---
 
 Membership is free to anyone who lives, works or studies in the district. Proof of

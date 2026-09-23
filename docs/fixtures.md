@@ -50,6 +50,8 @@ Records 1–10 are planted. The rest is generated filler with a fixed seed.
 So a question about loan periods has two contradicting answers, and a question about
 fines has three documents where the newest overrides one of the others. *Which wins?
 Does the answer say they disagree? Is a document's date part of the answer?*
+  Every document carries an `updated` date in its front matter (the loader keeps it as `updated`);
+  the FAQ is the oldest, and it is the one that is wrong.
 
 `guide-interlibrary.md` adds a fourth wrinkle: it says the *lending* library sets the
 period, "which may be shorter than our own 21 days" — correct in context, wrong if

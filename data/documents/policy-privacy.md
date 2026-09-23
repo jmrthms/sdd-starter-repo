@@ -1,6 +1,7 @@
 ---
 id: policy-privacy
 title: Borrower privacy
+updated: 2024-10-30
 ---
 
 Borrowing history is retained for **90 days** after an item is returned, then deleted.

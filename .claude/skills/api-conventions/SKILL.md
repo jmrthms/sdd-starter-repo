@@ -44,7 +44,9 @@ except ModelUnavailable as exc:
 ```
 
 **Return the confidence and the model version to the caller.** Embed `ModelPayload` in
-the response the way `DescribeResponse` does. Do not silently drop a low-confidence
+the response the way `DescribeResponse` does; its `value` carries the model's raw result — a string
+for a summary, the dict or list the task returned for a structured answer — even when the response
+also presents it in typed fields. Do not silently drop a low-confidence
 answer and do not silently show it as if it were certain — the response must let the
 caller tell the difference.
 

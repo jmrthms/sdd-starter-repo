@@ -1,6 +1,7 @@
 ---
 id: policy-makerspace
 title: Makerspace access
+updated: 2023-02-20
 ---
 
 Makerspace equipment requires a safety induction, valid for two years. The induction
