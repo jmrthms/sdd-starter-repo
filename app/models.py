@@ -68,15 +68,3 @@ class ErrorBody(BaseModel):
     detail: str
     code: str
 
-
-class SummaryResponse(BaseModel):
-    """`GET /libraries/summary` — see specs/filtered-summary.md §5."""
-
-    count: int
-    filters: dict
-    summary: Optional[str]
-    word_count: int
-    truncated: bool
-    cached: bool
-    model: Optional[ModelPayload]
-    model_error: Optional[str]
