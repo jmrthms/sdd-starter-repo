@@ -118,8 +118,16 @@ mistake.*
 **It is slow.** Talk over it. You have the whole skills-to-spec story to narrate.
 
 **The generated code does not run.** Say so — *this is the failure mode I warned you
-about, and it is not rare* — then `git stash && git checkout main` and run the finished
-version. Everything the session was going to build is already there.
+about, and it is not rare* — then:
+
+```bash
+git stash -u && git checkout main && make test
+```
+
+The `-u` matters: the spec you copied in at step 3 and whatever the session wrote are
+*untracked*, and a plain `git stash` leaves them behind, so `checkout main` refuses.
+Everything the session was going to build is already on `main`; the stash keeps the live
+attempt for the recording.
 
 **Tooling or network is gone.** Go to `what-you-saw` and walk the four points from
 `spec-v1.md` against `spec-v2.md` on screen. Eight minutes instead of thirty. Spend the
