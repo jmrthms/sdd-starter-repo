@@ -61,7 +61,8 @@ missing paths. Do not rush this.
 Land the line: *the draft was well-organised, well-written, complete-looking, and wrong
 in three quiet places.*
 
-**7:29 · Step 3 — fix and approve (2 min)** — edit on screen, number the criteria, commit.
+**7:29 · Step 3 — fix and approve (2 min)** — edit on screen, then land the approved version:
+`cp demo/spec-v2.md specs/filtered-summary.md`. Commit it.
 
 **7:31 · Step 4 — the blind handoff (5 min)** — cold session, scroll up to show it is
 empty, then:
@@ -103,8 +104,10 @@ mistake.*
 
 ## Before you start
 
-- [ ] `make test` green (52 tests)
-- [ ] `git status` clean, on a branch you can throw away
+- [ ] `git checkout demo/start` — the repository **without** the feature. `make test` shows
+      45 passed, **8 failed**: those are the criterion tests, red until the feature exists.
+      That is correct and it is the point — say so if anyone notices.
+- [ ] `git status` clean
 - [ ] Second agent session open in a **separate window**, already `cd`'d here, no history
 - [ ] `demo/spec-v1.md` and `REVIEW-NOTES.md` open in tabs you can reach fast
 - [ ] Terminal and editor font sizes raised for screen share
@@ -115,8 +118,8 @@ mistake.*
 **It is slow.** Talk over it. You have the whole skills-to-spec story to narrate.
 
 **The generated code does not run.** Say so — *this is the failure mode I warned you
-about, and it is not rare* — then `git checkout app/routes/summary.py tests/test_summary.py`
-and run the finished version.
+about, and it is not rare* — then `git stash && git checkout main` and run the finished
+version. Everything the session was going to build is already there.
 
 **Tooling or network is gone.** Go to `what-you-saw` and walk the four points from
 `spec-v1.md` against `spec-v2.md` on screen. Eight minutes instead of thirty. Spend the
