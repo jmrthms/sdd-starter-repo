@@ -31,4 +31,5 @@ you made** in your final message rather than quietly picking one — the gap bet
 the document said and what you had to guess is the thing being measured.
 
 Do not ask clarifying questions during a blind handoff. Proceed on your best reading and
-report what you had to decide.
+report what you had to decide. Do not write the acceptance tests unless asked — those belong
+to the specification's author, so that they measure the document rather than your reading of it.

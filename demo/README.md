@@ -64,13 +64,14 @@ empty, then:
 > Implement the feature specified in `specs/filtered-summary.md`. Follow the conventions
 > already in the repository.
 
-If it asks a question, **do not answer it** — write the question on screen and tell it to
+Do **not** ask it to write tests — those are yours, and they already exist. If it asks a question, **do not answer it** — write the question on screen and tell it to
 proceed on its best judgement. That moment teaches more than a clean run.
 
-**7:36 · Step 5 — tests from the criteria (4 min)**
+**7:36 · Step 5 — run the tests (4 min)**
 
-> Write pytest tests for each numbered acceptance criterion in
-> `specs/filtered-summary.md`. Name each test after the criterion it covers.
+Open `tests/test_summary.py` — **written by you, from the criteria, before the handoff.** Say
+that out loud: if the session that wrote the code also wrote the tests, they would pass
+against its own reading and prove nothing.
 
 Run them. Point at the naming — `test_ac5_different_filters_get_different_summaries` —
 and say why: a red test points at a line in a document, not just at a function.
