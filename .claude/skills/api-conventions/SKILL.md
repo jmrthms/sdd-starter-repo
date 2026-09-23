@@ -20,9 +20,11 @@ description: >
 
 - **List endpoints return `Page`** — `{items, total, limit, offset}`. Never a bare list.
 - `limit` defaults to 50, maximum 200. `offset` defaults to 0.
-- **Errors return `ErrorBody`** — `{detail, code}`. Use the status codes already in use:
-  `404` not found, `409` conflict, `422` validation (FastAPI does this for you),
-  `503` model unavailable, `504` model timed out.
+- **Errors return `ErrorBody`** — `{detail, code}`. Raise `HTTPException` as the existing routes do;
+  the handler in `app/main.py` adds `code` (`not_found`, `conflict`, `model_unavailable`,
+  `model_timeout`). Use the status codes already in use: `404` not found, `409` conflict,
+  `422` validation (FastAPI does this for you, with its own body shape), `503` model unavailable,
+  `504` model timed out.
 - Two-letter state codes are stored and compared **uppercase**.
 
 ## Calling the model

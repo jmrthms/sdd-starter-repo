@@ -32,8 +32,9 @@ Records 1–10 are planted. The rest is generated filler with a fixed seed.
 - Four **near-duplicates** of earlier tickets — same problem, different words. *Two
   tickets that are obviously the same problem: one ticket, or two?*
 - Five **genuinely ambiguous** ones (`"Help"`, `"Follow up"`, `"Something is wrong with
-  my account"`). The classifier returns low confidence on these. *Guess anyway, or route
-  straight to a person?*
+  my account"`). The classifier returns low confidence (0.44, category `general`) on these —
+  and on every ticket that fits none of its four categories, which is about a third of the
+  thirty. The ten clear cases score 0.62 or higher. *Guess anyway, or route straight to a person?*
 - One with **no subject**, one with **no body**. *Reject, or classify on what is there?*
 - One all-caps escalation, one accessibility report, one data-retention question, one
   deletion request. *Does a draft reply ever go out without a human reading it?*

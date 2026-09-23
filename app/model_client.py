@@ -337,9 +337,9 @@ def _classify_ticket(payload, rng, version, degraded):
     text = f"{payload.get('subject', '')} {payload.get('body', '')}".lower()
     categories = [
         ("billing", ("invoice", "charge", "refund", "payment", "billed")),
-        ("access", ("login", "password", "locked", "sign in", "access", "permission")),
-        ("data", ("import", "export", "csv", "duplicate", "missing record")),
-        ("outage", ("down", "500", "timeout", "unavailable", "cannot load")),
+        ("access", ("login", "password", "locked", "sign in", "access", "permission", "home branch")),
+        ("data", ("import", "export", "csv", "duplicate", "missing record", "due date", "loan")),
+        ("outage", ("down", "500", "timeout", "unavailable", "cannot load", "offline")),
     ]
     category, hits = "general", 0
     for name, words in categories:

@@ -9,7 +9,7 @@ a router there and including it below.
 
 from __future__ import annotations
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from app.model_client import ModelError
@@ -26,6 +26,17 @@ app = FastAPI(
 # or the path-parameter route captures the literal path "summary" first.
 app.include_router(summary.router)
 app.include_router(libraries.router)
+
+
+_ERROR_CODES = {404: "not_found", 409: "conflict", 503: "model_unavailable", 504: "model_timeout"}
+
+
+@app.exception_handler(HTTPException)
+async def http_error_handler(request: Request, exc: HTTPException) -> JSONResponse:
+    """Every error a route raises carries the ErrorBody shape: ``{detail, code}``."""
+    return JSONResponse(status_code=exc.status_code,
+                        content={"detail": exc.detail, "code": _ERROR_CODES.get(exc.status_code, "error")},
+                        headers=getattr(exc, "headers", None))
 
 
 @app.exception_handler(ModelError)
