@@ -18,7 +18,7 @@ Records 1–10 are planted. The rest is generated filler with a fixed seed.
 
 | ids | What is planted | The decision it forces |
 |---|---|---|
-| 1, 2 | `Eastport Public Library` / `Eastport Publ. Library` — same place, and they **disagree on `kind` and `annual_visits`** | When two records conflict on a field, which value survives, and where does the discarded one go? |
+| 1, 2 | `Eastport Public Library` / `Eastport Publ. Library` — same place, and they **disagree on `kind`, `annual_visits` and `has_makerspace`** | When two records conflict on a field, which value survives, and where does the discarded one go? |
 | 3, 4, 5 | **The transitivity chain.** 3 matches 4. 4 matches 5. 3 does **not** match 5 | There is no correct answer. Only a decided one. Merge all three? Refuse the chain? Ask a human? |
 | 6, 7, 8 | Three genuinely *different* facilities in one city with similar names | Your threshold will want to merge some of these. Where do you set it, and what does a false merge cost? |
 | 9 | `Cold Harbor Bookmobile` — founded 2025, **zero annual visits** | Legal but unusual. Does "zero visits" mean stale, new, or broken? A bulk delete of zero-visit records destroys it |

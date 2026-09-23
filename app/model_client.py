@@ -430,7 +430,10 @@ def _propose_merges(payload, rng, version, degraded):
     """Option E. Returns candidate pairs with a similarity score.
 
     The fixture deliberately contains an A~B, B~C, A-not-C chain. This task will
-    happily propose all three pairs. Deciding what to do about that is the exercise.
+    happily propose both pairs. Deciding what to do about that is the exercise.
+
+    Records in different states are never paired, however similar the names — except
+    in the wrongness mode, which adds one confidently wrong cross-state pair.
     """
     records = payload.get("records") or []
 
@@ -443,6 +446,8 @@ def _propose_merges(payload, rng, version, degraded):
     pairs = []
     for i, a in enumerate(records):
         for b in records[i + 1:]:
+            if a.get("state") and b.get("state") and a["state"] != b["state"]:
+                continue
             na, nb = norm(a.get("name", "")), norm(b.get("name", ""))
             if not na or not nb:
                 continue
@@ -451,7 +456,7 @@ def _propose_merges(payload, rng, version, degraded):
             score = shared / total
             if a.get("city") and a.get("city") == b.get("city"):
                 score += 0.15
-            if score >= (0.55 if version == "v1" else 0.65):
+            if score >= (0.55 if version == "v1" else 0.70):
                 conflicts = [f for f in ("city", "state", "kind", "annual_visits")
                              if a.get(f) is not None and b.get(f) is not None and a[f] != b[f]]
                 pairs.append({"a_id": a.get("id"), "b_id": b.get("id"),
