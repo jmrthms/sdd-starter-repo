@@ -2,14 +2,15 @@
 name: how-to-write-a-spec
 description: >
   Use whenever the task is to write, review or revise a feature specification for this
-  repository. Produces a spec/<feature>.md following the template, and pulls the
+  repository. Produces a specs/<feature>.md following the template, and pulls the
   repository's API and testing conventions into it so implementation reads only the spec.
 ---
 
 # Writing a feature specification here
 
 One feature, one file, in `specs/`. Two to four pages. Name it after the feature:
-`specs/filtered-summary.md`, not `specs/spec.md`.
+`specs/filtered-summary.md`, not `specs/spec.md` — unless an assignment fixes the name. The Week 5
+assignment does: `specs/spec-v1.md`, then `specs/spec-v2.md`, so the grader can find them.
 
 ## Before writing, read
 
@@ -39,8 +40,10 @@ endpoint returns `Page`" and "errors use `ErrorBody` with a `code` field".
 
 A specification here is not finished until it answers all of these:
 
-- The filter matches **zero** records.
-- The filter matches **more records than the page size**.
+- The input selects **zero** of anything — an empty filter result, no matching documents, an
+  empty diff, a goal with no applicable operation.
+- The input is **bigger than one page or one call can hold** — more records than the page size,
+  a four-thousand-line diff, a plan with more steps than it may run unattended.
 - The model returns **low confidence** (`< 0.5`). Show it, hide it, or refuse to answer?
 - The model **fails** (`ModelUnavailable`) or **times out** (`ModelTimeout`). These are
   different and may deserve different handling.

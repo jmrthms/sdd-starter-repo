@@ -7,7 +7,7 @@ setup:            ## create the virtualenv and install dependencies
 	@echo "Done. Now run: make test"
 
 test:             ## run the whole test suite (this is the one command that matters)
-	.venv/bin/python -m pytest -q
+	.venv/bin/python -m pytest
 
 run:              ## start the API on http://127.0.0.1:8000 (docs at /docs)
 	.venv/bin/uvicorn app.main:app --reload

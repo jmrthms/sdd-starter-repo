@@ -1,6 +1,6 @@
 # Facilities API — starter repository
 
-A small records API with one model-backed endpoint already working. It is the starting
+A small records API with two model-backed endpoints already working. It is the starting
 point for the Week 5 specification exercise: you will add a substantial feature to it
 from a written specification, handed to an agent that has never seen your conversation.
 
@@ -29,7 +29,8 @@ app/
   model_client.py    THE STUB MODEL — read this one
   fixtures.py        loaders for the sample inputs in data/
   routes/
-    libraries.py     list, get, create, and one model-backed endpoint
+    libraries.py     list, get, create, and one model-backed endpoint (describe)
+    summary.py       the second one — the worked example: spec → route → tests
 data/                sample inputs for every assignment option
 specs/               your specification goes here
 tests/               run with `make test`
@@ -88,7 +89,7 @@ Using Copilot or Cursor instead? `AGENTS.md` carries the same rules in one file.
 
 ## For the assignment
 
-1. **Reconnaissance** — describe your feature in one sentence, let the agent start, do
+1. **Reconnaissance** — describe your feature in one or two sentences, let the agent start, do
    not correct it, write down every assumption it made. Then throw the code away.
 2. **Write the specification** into `specs/`, using the template.
 3. **Blind handoff** — new session, no history. Hand it this repository and your spec.

@@ -29,8 +29,8 @@ working implementation and eight passing tests on disk.
 
 ```
 round 1 (from spec-v1)                      5 of 8 acceptance criteria FAIL
-round 2 (from spec-v2)                      8 of 8 pass
-blind handoff — a fresh agent, spec only    8 of 8 pass, and it found six real spec gaps
+round 2 (from spec-v2)                      8 tests pass, covering all seven criteria (AC6 has two)
+blind handoff — a fresh agent, spec only    8 tests pass, and it found six real spec gaps
 ```
 
 The blind implementer's full report is in `BLIND-HANDOFF-REPORT.md`. It is the best

@@ -59,7 +59,7 @@ GET /libraries/summary?state=MA&kind=branch        # the same filters as GET /li
   "word_count": 60,
   "truncated": true,
   "cached": false,
-  "model": {"confidence": 0.88, "model_version": "v1", "latency_ms": 0},   # or null
+  "model": {"value": "...", "confidence": 0.88, "model_version": "v1", "latency_ms": 0},  # ModelPayload, or null
   "model_error": null
 }
 ```
@@ -69,9 +69,20 @@ key. Unknown query parameters are ignored, exactly as on `GET /libraries`.
 
 ## 6. Constraints
 
-- **Cache key** is the normalised active filter set (`app.filters.active`), so key
-  ordering and unset filters cannot produce two entries for one selection.
+- **Cache key** is the normalised active filter set (`app.filters.active`): key order,
+  unset filters, and letter case in text filters cannot produce two entries for one
+  selection. `city=Boston` and `city=boston` are one key.
+- **Only responses that carry a summary are cached.** An empty selection (AC4) and a
+  model failure (AC6) are never cached, or a ten-minute outage would be served for ten
+  more minutes.
 - **Cache lifetime** is 10 minutes from write. Process-local; no external store.
+- **Low confidence is shown, not hidden.** The score is returned as-is; no threshold is
+  applied in this increment. A caller that wants to suppress low-confidence summaries
+  reads `model.confidence`.
+- **Concurrent misses** on the same key may both call the model. Single-flight is out
+  of scope for this increment.
+- **Model version** is not part of the cache key. A `v1`→`v2` switch inside the window
+  serves the cached `v1` entry, labelled `v1` in `model.model_version`.
 - **Word cap** is 60, enforced server-side. The model does not respect it.
 - **Model access** goes through `app.model_client.get_client()`, per `api-conventions`.
 - The response embeds `ModelPayload`, as `DescribeResponse` does.
@@ -81,15 +92,17 @@ key. Unknown query parameters are ignored, exactly as on `GET /libraries`.
 
 ## 7. Test plan
 
-One test per criterion in `tests/test_summary.py`, named `test_ac<N>_...`:
+One test per criterion in `tests/test_summary.py`, named `test_ac<N>_...`. **The route module
+must expose `clear_cache()`**; the `client` fixture in `tests/conftest.py` calls it between
+tests so cached state never leaks from one test into the next.
 
 | | |
 |---|---|
 | AC1 | happy path over a real filter |
-| AC2 | stub returns 70–95 words; assert ≤ 60 and `truncated` |
+| AC2 | stub returns 65–70 words; assert ≤ 60 and `truncated` |
 | AC3 | call twice; assert `cached` and that the client recorded one call |
 | AC4 | filter matching nothing; assert no model call |
-| AC5 | two different filters; assert the summaries differ |
+| AC5 | two filters with different counts; assert the second is not `cached` and its `count` differs |
 | AC6 | `STUB_FAILURE_RATE=1.0` and a timeout; assert 200 and `model_error` |
 | AC7 | assert `confidence` and `model_version` present |
 

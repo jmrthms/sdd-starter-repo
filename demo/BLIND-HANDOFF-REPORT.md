@@ -6,7 +6,7 @@ and `specs/filtered-summary.md` — was told:
 > Implement the feature specified in `specs/filtered-summary.md`. Follow the conventions
 > already in the repository.
 
-**Result: 8 of 8 of the spec author's acceptance tests passed against its code.** The
+**Result: all 8 of the spec author's acceptance tests — covering its seven criteria — passed against its code.** The
 specification was implementable blind. That is the claim the whole exercise rests on.
 
 What follows is the implementer's own report, verbatim. Read section 3 and section 4:
@@ -18,7 +18,7 @@ the spec has since been fixed for both (see the git history for `specs/filtered-
 
 ## 1. FILES CHANGED
 - Created `app/cache.py` — `TTLCache` (process-local, locked, injectable clock)
-- Created `tests/test_summary.py` — `test_ac1_` … `test_ac7_`
+- Created `tests/test_summary.py` — `test_ac1_` … `test_ac7_` *(the session's own tests; `AGENTS.md` now tells implementers not to write acceptance tests — the tests scored above were the author's, kept outside the session)*
 - Edited `app/models.py` — `SummaryResponse`
 - Edited `app/routes/libraries.py` — `GET /libraries/summary`, registered before `/{library_id}`
 - Edited `tests/conftest.py` — `client` fixture also clears the summary cache
