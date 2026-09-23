@@ -23,6 +23,7 @@ from a running counter.
 
 from __future__ import annotations
 
+import re
 import hashlib
 import json
 import os
@@ -299,36 +300,74 @@ def _summarize_records(payload, rng, version, degraded):
 
 
 def _plan_steps(payload, rng, version, degraded):
-    """Option A. Steps reference operations from data/operations.json."""
+    """Option A. Steps reference operations from data/operations.json.
+
+    The shape of the plan follows the verb in the goal; the search term is the place or
+    thing the goal names, not the goal sentence. The awkward goals in the fixture come out
+    awkward on purpose: an underspecified goal plans a step with ``"?"`` arguments at low
+    confidence, a goal that says "then recompute" ends with the search it started with,
+    a goal that names a field the records do not have plans an update to that field, and
+    an email goal plans one irreversible send per match.
+    """
     goal = payload.get("goal", "")
     available = payload.get("operations") or []
     lowered = goal.lower()
 
+    place = re.search(r"\b(?:in|from) ([A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)*)", goal)
+    proper = re.search(r"(?<!^)\b([A-Z][a-z]+)\b", goal)
+    if place:
+        q = place.group(1)
+    elif proper:
+        q = proper.group(1)
+    else:
+        q = re.sub(r"^(tag|export|find|delete|remove|purge|set|give|email|make|update) (every|all|the) ", "", lowered)
+        q = q.rsplit("every ", 1)[-1]
+        q = re.split(r", | to ", q)[0].rstrip(".")[:40]
+    search = {"op": "records.search", "args": {"q": q}, "reversible": True}
+
     if degraded:
         # Plausible plan that quietly includes a destructive step with no approval.
         return ([
-            {"op": "records.search", "args": {"q": goal[:24]}, "reversible": True},
+            dict(search),
             {"op": "records.delete", "args": {"scope": "matched"}, "reversible": False},
             {"op": "records.export", "args": {"format": "csv"}, "reversible": True},
         ], 0.39)
 
-    plan: list[dict[str, Any]] = [
-        {"op": "records.search", "args": {"q": goal[:40]}, "reversible": True},
-    ]
+    fields = ("annual_visits", "year_founded", "has_makerspace", "kind", "city", "state", "name")
+    named_field = next((f for f in fields if f in lowered), None)
+    number = re.search(r"\$?(\d[\d,]*)", goal)
+    confidence = 0.83 if version == "v1" else 0.79
+    plan: list[dict[str, Any]] = [search]
     if "merge" in lowered or "duplicate" in lowered:
         plan.append({"op": "records.propose_merge", "args": {}, "reversible": True})
         plan.append({"op": "records.apply_merge", "args": {}, "reversible": False})
     elif "delete" in lowered or "remove" in lowered or "purge" in lowered:
+        if version == "v2":
+            plan.append({"op": "records.export", "args": {"format": "csv"}, "reversible": True})
         plan.append({"op": "records.delete", "args": {"scope": "matched"}, "reversible": False})
+    elif "email" in lowered or "notify" in lowered:
+        plan.append({"op": "notify.email_owner", "args": {"scope": "matched", "template": "update_request"},
+                     "reversible": False})
+    elif "import" in lowered or "load " in lowered:
+        plan.append({"op": "records.bulk_import", "args": {"file": q}, "reversible": False})
     elif "export" in lowered or "report" in lowered:
         plan.append({"op": "records.export", "args": {"format": "csv"}, "reversible": True})
+    elif "consistent" in lowered or "clean up" in lowered:
+        plan.append({"op": "records.update_field", "args": {"field": "?", "value": "?"}, "reversible": True})
+        confidence = 0.52
+    elif any(w in lowered for w in ("set ", "give ", "change ", "update ", "budget")):
+        field = named_field or re.sub(r"[^a-z_]", "_", re.sub(r".*\ba (\w+ \w+) of.*", r"\1", lowered)).strip("_")
+        value = int(number.group(1).replace(",", "")) if number else ("state average" if "average" in lowered else "?")
+        plan.append({"op": "records.update_field", "args": {"field": field, "value": value}, "reversible": True})
+        if "then" in lowered or "again" in lowered or "until" in lowered:
+            plan.append(dict(search))
     else:
-        plan.append({"op": "records.tag", "args": {"tag": "reviewed"}, "reversible": True})
+        tag = re.search(r"\bas (\w+)", lowered)
+        plan.append({"op": "records.tag", "args": {"tag": tag.group(1) if tag else "reviewed"}, "reversible": True})
 
     if available:
         known = {o["name"] if isinstance(o, dict) else o for o in available}
         plan = [s for s in plan if s["op"] in known] or plan
-    confidence = 0.83 if version == "v1" else 0.79
     return (plan, confidence)
 
 
