@@ -47,7 +47,7 @@ docs/fixtures.md     what is planted in the sample data, and why
 | `GET /libraries/{id}` | one record |
 | `POST /libraries` | the write path; rejects a duplicate name in the same city |
 | `GET /libraries/{id}/describe` | **model-backed.** Copy this one's shape |
-| `GET /libraries/summary` | the feature built live in class, from `specs/filtered-summary.md` |
+| `GET /libraries/summary` | a complete worked example — `specs/filtered-summary.md` → route → `tests/test_summary.py`. Copy its shape |
 | `GET /health` | liveness |
 
 `describe_library` in `app/routes/libraries.py` is the worked example of calling the

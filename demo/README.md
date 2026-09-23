@@ -1,4 +1,8 @@
-# Live demo — runbook
+# Fallback demo — runbook
+
+**The live demo now runs on a separate repository, <https://github.com/jmrthms/sdd-demo-meshview>.**
+This runbook is the fallback of last resort if that repository cannot be used; nothing here is needed
+for the assignment.
 
 **Dry-run completed Sep 22. Every artifact in this folder has been built and verified.**
 
