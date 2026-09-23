@@ -92,7 +92,9 @@ key. Unknown query parameters are ignored, exactly as on `GET /libraries`.
 
 ## 7. Test plan
 
-One test per criterion in `tests/test_summary.py`, named `test_ac<N>_...`:
+One test per criterion in `tests/test_summary.py`, named `test_ac<N>_...`. **The route module
+must expose `clear_cache()`**; the `client` fixture in `tests/conftest.py` calls it between
+tests so cached state never leaks from one test into the next.
 
 | | |
 |---|---|

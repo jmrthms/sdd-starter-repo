@@ -12,7 +12,7 @@ from a written specification, handed to an agent that has never seen your conver
 
 ```bash
 make setup     # create .venv and install (Python 3.11+)
-make test      # 44 tests, about a second
+make test      # 53 tests, about a second
 make run       # http://127.0.0.1:8000/docs
 ```
 
@@ -33,6 +33,8 @@ app/
 data/                sample inputs for every assignment option
 specs/               your specification goes here
 tests/               run with `make test`
+demo/                the in-class example: flawed first draft, approved spec, round-1 exhibit
+logs/                where your blind-handoff transcripts go
 docs/fixtures.md     what is planted in the sample data, and why
 .claude/skills/      how this repo expects specs, endpoints and tests to be written
 ```
@@ -45,6 +47,7 @@ docs/fixtures.md     what is planted in the sample data, and why
 | `GET /libraries/{id}` | one record |
 | `POST /libraries` | the write path; rejects a duplicate name in the same city |
 | `GET /libraries/{id}/describe` | **model-backed.** Copy this one's shape |
+| `GET /libraries/summary` | the feature built live in class, from `specs/filtered-summary.md` |
 | `GET /health` | liveness |
 
 `describe_library` in `app/routes/libraries.py` is the worked example of calling the
