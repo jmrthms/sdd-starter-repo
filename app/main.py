@@ -12,7 +12,7 @@ from __future__ import annotations
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
-from app.model_client import ModelError
+from app.model_client import ModelError, ModelTimeout
 from app.routes import libraries, summary
 
 app = FastAPI(
@@ -46,6 +46,8 @@ async def model_error_handler(request: Request, exc: ModelError) -> JSONResponse
     A route that wants different behaviour catches the exception itself — see
     :func:`app.routes.libraries.describe_library`.
     """
+    if isinstance(exc, ModelTimeout):
+        return JSONResponse(status_code=504, content={"detail": str(exc), "code": "model_timeout"})
     return JSONResponse(status_code=503,
                         content={"detail": str(exc), "code": "model_unavailable"})
 

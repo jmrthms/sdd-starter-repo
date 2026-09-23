@@ -1,6 +1,6 @@
 --- a/app/routes/libraries.py
 +++ b/app/routes/libraries.py
-@@ -58,12 +58,26 @@ def list_libraries(
+@@ -58,9 +58,25 @@ def list_libraries(
      db: sqlite3.Connection = Depends(get_db),
  ) -> Page:
      where, args = filters.build_where(params)

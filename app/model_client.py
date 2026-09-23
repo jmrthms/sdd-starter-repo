@@ -407,7 +407,7 @@ def _review_diff(payload, rng, version, degraded):
 
     for i, line in enumerate(added, start=1):
         body = line[1:].strip()
-        if "except:" in body or "except Exception" in body and "pass" in body:
+        if "except:" in body or "except Exception:" in body:
             comments.append({"file": payload.get("file", "?"), "line": i, "severity": "major",
                              "comment": "Bare except swallows the error. Name the exception."})
         elif "TODO" in body or "FIXME" in body:

@@ -64,10 +64,10 @@ quoted alone.
 | File | |
 |---|---|
 | `01-small-clean.diff` | 25 lines, adds a filter correctly. **Nothing to say about it.** Does your assistant stay quiet? |
-| `02-has-a-real-bug.diff` | Contains a hardcoded API key, a `TODO`, an `== None`, and a bare `except: pass` — all of which the model finds. It **also** contains an off-by-one (`page * limit + 1`) that silently skips a record, and a `NameError` when the swallowed exception fires. **The model finds neither.** |
+| `02-has-a-real-bug.diff` | Contains a hardcoded API key (used twice), a `TODO`, an `== None`, and a broad `except Exception: pass` — all of which the model finds. It **also** contains an off-by-one (`page * limit + 1`) that silently skips a record, and a `NameError` when the swallowed exception fires. **The model finds neither.** |
 | `03-very-large.diff` | 496 lines of mechanical rename. *What happens on a very large diff — review it all, sample it, or refuse?* |
 
-Diff 02 is the point of the option: the assistant produces four confident comments about
+Diff 02 is the point of the option: the assistant produces five confident comments about
 the shallow problems and misses both real bugs. *What is a comment worth, and what does
 a clean review from this assistant actually license you to believe?*
 

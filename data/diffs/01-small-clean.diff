@@ -17,7 +17,7 @@
      }
 --- a/app/filters.py
 +++ b/app/filters.py
-@@ -30,6 +30,7 @@ FILTERS: tuple[Filter, ...] = (
+@@ -30,3 +32,4 @@ FILTERS: tuple[Filter, ...] = (
      Filter("founded_after", "year_founded > ?", lambda v: f"founded after {v}"),
      Filter("founded_before", "year_founded < ?", lambda v: f"founded before {v}"),
 +    Filter("min_year_gap", "(2026 - year_founded) >= ?", lambda v: f"at least {v} years old"),

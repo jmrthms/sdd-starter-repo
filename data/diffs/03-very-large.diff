@@ -481,7 +481,7 @@
  # context line 440
  # context line 441
  # context line 442
-@@ -445,10 +445,10 @@ def normalise_block_37(value):
+@@ -445,9 +445,9 @@ def normalise_block_37(value):
  # context line 445
  # context line 446
  # context line 447
